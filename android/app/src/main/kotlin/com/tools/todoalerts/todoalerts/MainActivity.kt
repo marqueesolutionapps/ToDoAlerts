@@ -1,4 +1,4 @@
-package com.tools.todoalerts.todoalerts
+package com.scheduleplanner.todoalerts
 
 import io.flutter.embedding.android.FlutterActivity
 

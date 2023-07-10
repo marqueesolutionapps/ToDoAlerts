@@ -2,7 +2,7 @@
 
 part of 'WidgetLibrary.dart';
 
-class CustomTextFormField extends StatefulWidget {
+class CustomTextFormField extends StatelessWidget {
 
   final TextEditingController? controller;
   final TextInputType? keyboardType;
@@ -19,12 +19,19 @@ class CustomTextFormField extends StatefulWidget {
   final ValueChanged<String>? onFieldSubmitted;
   final bool? readOnly;
   final bool? autofocus;
+  final bool? isBorder;
+  final double? fontSize;
+  final int? minLines;
+  final int? maxLines;
+  final TextAlign? textAlign;
+  final Color? fillColor;
   final bool? isSuffixIcon;
+  final bool? isModelField;
   final String? icon;
 
-  const CustomTextFormField({
+  CustomTextFormField({
     Key? key,
-    this.controller,
+    required this.controller,
     this.keyboardType,
     this.inputFormatters,
     this.labelText,
@@ -39,53 +46,45 @@ class CustomTextFormField extends StatefulWidget {
     this.onFieldSubmitted,
     this.readOnly,
     this.autofocus,
+    this.textAlign,
+    this.fontSize,
+    this.isBorder,
+    this.minLines,
+    this.maxLines,
+    this.fillColor,
     this.isSuffixIcon,
-    this.icon,
+    this.isModelField,
+    this.icon
   }) : super(key: key);
 
   @override
-  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
-}
-
-class _CustomTextFormFieldState extends State<CustomTextFormField> {
-
-  String? hintText, labelText, icon;
-  bool? readOnly, autofocus, isSuffixIcon;
-
-
-  @override
-  void initState() {
-    labelText = widget.labelText != null && widget.labelText != "null" && widget.labelText != "" ? widget.labelText : "";
-    hintText = widget.hintText != null && widget.hintText != "null" && widget.hintText != "" ? widget.hintText : "";
-    readOnly = widget.readOnly != null && widget.readOnly != "null" && widget.readOnly != "" ? widget.readOnly! : false;
-    autofocus = widget.autofocus != null && widget.autofocus != "null" && widget.autofocus != "" ? widget.autofocus : false;
-    isSuffixIcon = widget.isSuffixIcon != null && widget.isSuffixIcon != "null" && widget.isSuffixIcon != "" ? widget.isSuffixIcon : false;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    bool isSuffixIconValue = isSuffixIcon ?? false;
     return TextFormField(
-      controller: widget.controller,
-      keyboardType: widget.keyboardType,
-      cursorColor: primary,
+      textAlign: textAlign ?? TextAlign.center,
+      controller: controller,
+      keyboardType: keyboardType,
+      cursorColor: themeTextDefaultColor,
       textInputAction: TextInputAction.next,
-      inputFormatters: widget.inputFormatters,
-      validator: widget.validator,
-      initialValue: widget.initialValue,
-      focusNode: widget.focusNode,
+      inputFormatters: inputFormatters,
+      validator: validator,
+      initialValue: initialValue,
+      focusNode: focusNode,
+      minLines: minLines ?? 1,
+      maxLines: maxLines ?? 1,
       style:  AppTextStyle.getTextStyle(
-        color: black,
-        fontWeight: 500,
+          color: themeTextDefaultColor,
+          fontWeight: 600,
+          fontSize: fontSize ?? 16
       ),
-      onChanged: widget.onChanged,
-      onTap: widget.onTap,
-      onTapOutside: widget.onTapOutside,
-      onEditingComplete: widget.onEditingComplete,
-      onFieldSubmitted: widget.onFieldSubmitted,
-      readOnly: readOnly!,
-      autofocus: autofocus!,
-      decoration: isSuffixIcon == true ? formFieldDecorationWithSuffixIcon(labelText!,hintText!, icon!) : formFieldDecoration(labelText!,hintText!),
+      onChanged: onChanged,
+      onTap: onTap,
+      onTapOutside: onTapOutside,
+      onEditingComplete: onEditingComplete,
+      onFieldSubmitted: onFieldSubmitted,
+      readOnly: readOnly ?? false,
+      autofocus: autofocus ?? false,
+      decoration: isSuffixIconValue == true ? formFieldDecorationWithSuffixIcon(labelText ?? "", hintText ?? "", icon ?? "", fillColor ?? white, isModelField ?? false) : formFieldDecoration(labelText ?? "",hintText ?? "", fillColor ?? white, isModelField ?? false),
     );
   }
 }

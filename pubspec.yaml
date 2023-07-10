@@ -35,13 +35,26 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  flutter_svg: ^2.0.7
+  shared_preferences: ^2.1.2
+  synchronized: ^3.1.0
+  flutter_switch: ^0.3.2
+  intl: ^0.18.1
+  http: ^1.1.0
+  connectivity_plus: ^4.0.1
+  device_info_plus: ^9.0.2
+  flutter_local_notifications: ^15.0.1
+  firebase_messaging: ^14.6.4
+  app_tracking_transparency: ^2.0.4
+  firebase_crashlytics: ^3.3.3
+  permission_handler: ^10.4.2
+  path_provider: ^2.0.15
+  sqflite: ^2.2.8+4
+  flutter_app_badger: ^1.5.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  google_fonts: ^5.1.0
-  flutter_svg: ^2.0.7
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -66,3 +79,19 @@ flutter:
     - assets/
     - assets/SVG/
     - assets/IMG/
+
+  fonts:
+    - family: SFUIText
+      fonts:
+        - asset: assets/Fonts/SFUIText-Regular.ttf
+          weight: 400
+        - asset: assets/Fonts/SFUIText-Bold.ttf
+          weight: 700
+        - asset: assets/Fonts/SFUIText-Heavy.ttf
+          weight: 900
+        - asset: assets/Fonts/SFUIText-Light.ttf
+          weight: 300
+        - asset: assets/Fonts/SFUIText-Medium.ttf
+          weight: 500
+        - asset: assets/Fonts/SFUIText-Semibold.ttf
+          weight: 600

@@ -2,12 +2,13 @@
 
 part of 'DecorationLibrary.dart';
 
-InputDecoration formFieldDecoration(String labelText, String hintText) {
+InputDecoration formFieldDecoration(String labelText, String hintText, Color fillColor, bool isModelField) {
   return InputDecoration(
     filled: true,
-    fillColor: white,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-    floatingLabelBehavior: FloatingLabelBehavior.never,
+    fillColor: fillColor,
+    isDense: false,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+    floatingLabelBehavior: FloatingLabelBehavior.always,
     disabledBorder: borderDesign,
     enabledBorder: borderDesign,
     focusedBorder: borderDesign,
@@ -15,35 +16,37 @@ InputDecoration formFieldDecoration(String labelText, String hintText) {
     focusedErrorBorder: borderDesign,
     hintText: hintText,
     labelText: labelText,
-    hintStyle: textStyle(grey, 500, 18),
-    labelStyle: textStyle(black, 500, 18),
+    hintStyle: textStyle(isModelField ? bottomBarItemAndDayNameColor : hintGrey, isModelField ? 700 : 400, 18),
+    labelStyle: textStyle(black, 400, 18),
     errorStyle: textStyle(errorColor, 500, 14),
     errorMaxLines: 1,
   );
 }
 
-InputDecoration formFieldDecorationWithSuffixIcon(String labelText, String hintText, String icon) {
+InputDecoration formFieldDecorationWithSuffixIcon(String labelText, String hintText, String icon, Color fillColor, bool isModelField) {
   return InputDecoration(
-    fillColor: white,
     filled: true,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-    floatingLabelBehavior: FloatingLabelBehavior.never,
+    fillColor: fillColor,
+    isDense: false,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+    floatingLabelBehavior: FloatingLabelBehavior.always,
     disabledBorder: borderDesign,
     enabledBorder: borderDesign,
     focusedBorder: borderDesign,
     errorBorder: borderDesign,
     focusedErrorBorder: borderDesign,
     suffixIcon: Padding(
-      padding: const EdgeInsets.only(top: 5.0, right: 8.0, bottom: 5.0),
+      padding: const EdgeInsets.only(top: 10.0, right: 10.0, bottom: 10.0),
       child: SvgPicture.asset(
         icon,
+        color: primary,
         fit: BoxFit.contain,
       ),
     ),
     hintText: hintText,
     labelText: labelText,
-    hintStyle: textStyle(grey, 500, 18),
-    labelStyle: textStyle(black, 500, 18),
+    hintStyle: textStyle(isModelField ?  bottomBarItemAndDayNameColor : hintGrey, isModelField ? 700 : 400, 18),
+    labelStyle: textStyle(black, 400, 18),
     errorStyle: textStyle(errorColor, 500, 14),
     errorMaxLines: 1,
   );
@@ -53,7 +56,7 @@ InputBorder borderDesign = OutlineInputBorder(
   borderRadius: customBorderRadius,
   borderSide: BorderSide(
       width: 2,
-      color: greyBorder,
+      color: fillGray,
   ),
 );
 

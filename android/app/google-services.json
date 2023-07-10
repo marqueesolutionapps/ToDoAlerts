@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "823944456842",
+    "project_id": "todoalerts-2fea4",
+    "storage_bucket": "todoalerts-2fea4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823944456842:android:bbf8994d7d831b95bb5b73",
+        "android_client_info": {
+          "package_name": "com.scheduleplanner.todoalerts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823944456842-o6cbfo28gu8hva78113p0siodlma569m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA9ZKkkFa7Ex3gwGiflMKWP4CN8v5GXBE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823944456842-o6cbfo28gu8hva78113p0siodlma569m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

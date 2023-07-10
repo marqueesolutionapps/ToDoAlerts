@@ -4,7 +4,7 @@ part of 'UtilityLibrary.dart';
 
 class AppTextStyle {
 
-  static FontWeight _getFontWeight(int weight) {
+  static FontWeight getFontWeight(int weight) {
     switch (weight) {
       case 100:
         return FontWeight.w100;
@@ -44,7 +44,16 @@ class AppTextStyle {
       finalColor = color;
     }
 
-    return GoogleFonts.poppins(fontSize: fontSize, fontWeight: _getFontWeight(fontWeight), letterSpacing: letterSpacing, color: finalColor, decoration: decoration, height: height, wordSpacing: wordSpacing,);
+    return TextStyle(
+      fontSize: fontSize,
+      fontWeight: getFontWeight(fontWeight),
+      letterSpacing: letterSpacing,
+      color: finalColor,
+      decoration: decoration,
+      height: height,
+      wordSpacing: wordSpacing,
+      fontFamily: "SFUIText"
+    );
   }
 
 }
