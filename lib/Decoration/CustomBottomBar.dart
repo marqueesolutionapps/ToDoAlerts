@@ -15,7 +15,7 @@ Widget CustomBottomBar(bool isShowAddEventButton, String selectedMenu, GestureTa
         if(isShowAddEventButton == true)
           AddEventFloatingButton(onTapAddEvent),
         Positioned(
-          bottom: 25,
+          bottom: Util.bottomBarHeight! / 5,
           left: 0,
           right: 0,
           child: Row(
@@ -24,43 +24,67 @@ Widget CustomBottomBar(bool isShowAddEventButton, String selectedMenu, GestureTa
             children: [
               GestureDetector(
                 onTap: onTapEventCalendar,
-                child: SvgPicture.asset(
-                  calendarIcon,
-                  height: Util.bottomBarMenuSize,
-                  width: Util.bottomBarMenuSize,
-                  color: selectedMenu == eventCalendarPage ? primary : bottomBarItemAndDayNameColor,
-                  fit: BoxFit.fill,
+                child: Container(
+                  color: bottomBarColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: SvgPicture.asset(
+                      calendarIcon,
+                      height: Util.bottomBarMenuSize,
+                      width: Util.bottomBarMenuSize,
+                      color: selectedMenu == eventCalendarPage ? primary : bottomBarItemAndDayNameColor,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
               ),
               GestureDetector(
                 onTap: onTapEventHistory,
-                child: SvgPicture.asset(
-                  clockIcon,
-                  height: Util.bottomBarMenuSize,
-                  width: Util.bottomBarMenuSize,
-                  color: selectedMenu == eventHistoryPage ? primary : bottomBarItemAndDayNameColor,
-                  fit: BoxFit.fill,
+                child: Container(
+                  color: bottomBarColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: SvgPicture.asset(
+                      clockIcon,
+                      height: Util.bottomBarMenuSize,
+                      width: Util.bottomBarMenuSize,
+                      color: selectedMenu == eventHistoryPage ? primary : bottomBarItemAndDayNameColor,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
               ),
               SizedBox(width: Util.screenWidth! * 0.20,),
               GestureDetector(
                 onTap: onTapEventNotification,
-                child: SvgPicture.asset(
-                  notificationIcon,
-                  height: Util.bottomBarMenuSize,
-                  width: Util.bottomBarMenuSize,
-                  color: selectedMenu == eventNotificationPage ? primary : bottomBarItemAndDayNameColor,
-                  fit: BoxFit.fill,
+                child: Container(
+                  color: bottomBarColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: SvgPicture.asset(
+                      notificationIcon,
+                      height: Util.bottomBarMenuSize,
+                      width: Util.bottomBarMenuSize,
+                      color: selectedMenu == eventNotificationPage ? primary : bottomBarItemAndDayNameColor,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
               ),
               GestureDetector(
                 onTap: onTapProfile,
-                child: SvgPicture.asset(
-                  profileIcon,
-                  height: Util.bottomBarMenuSize,
-                  width: Util.bottomBarMenuSize,
-                  color: selectedMenu == profilePage ? primary : bottomBarItemAndDayNameColor,
-                  fit: BoxFit.fill,
+                child: Container(
+                  color: bottomBarColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: SvgPicture.asset(
+                      profileIcon,
+                      height: Util.bottomBarMenuSize,
+                      width: Util.bottomBarMenuSize,
+                      color: selectedMenu == profilePage ? primary : bottomBarItemAndDayNameColor,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
               ),
             ],

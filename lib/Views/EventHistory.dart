@@ -85,7 +85,7 @@ class _EventHistoryState extends State<EventHistory> with SingleTickerProviderSt
                               ),
                               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                               width: double.infinity,
-                              child: CustomText(value: completedTitle, maxLines: 1, fontWeight: 500, color: _tabController!.index == 0 ? primary : black,),
+                              child: CustomText(value: completedTitle, maxLines: 1, fontWeight: 500, color: _tabController!.index == 0 ? primary : themeTextDefaultColor,),
                             ),
                             if(_tabController!.index == 0)
                             Divider(thickness: 2, height: 2, color: primary,)
@@ -101,7 +101,7 @@ class _EventHistoryState extends State<EventHistory> with SingleTickerProviderSt
                                 ),
                                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                                 width: double.infinity,
-                                child: CustomText(value: upcomingTitle, maxLines: 1, fontWeight: 500, color: _tabController!.index == 1 ? primary : black,)),
+                                child: CustomText(value: upcomingTitle, maxLines: 1, fontWeight: 500, color: _tabController!.index == 1 ? primary : themeTextDefaultColor,)),
                             if(_tabController!.index == 1)
                             Divider(thickness: 2, height: 2, color: primary,)
                           ],
@@ -265,190 +265,6 @@ class _EventHistoryState extends State<EventHistory> with SingleTickerProviderSt
                 ),
               ),
             ),
-
-
-            // Expanded(
-            //   child: DefaultTabController(
-            //     length: 2,
-            //     child: Column(
-            //       children: [
-            //         Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: primary.withOpacity(0.5)),
-            //           child: TabBar(
-            //             physics: BouncingScrollPhysics(),
-            //             indicator: BoxDecoration(
-            //               color: primary,
-            //               borderRadius: BorderRadius.circular(20),
-            //             ),
-            //             tabs: [
-            //               Tab(
-            //                 child: CustomText(value: completedTitle, maxLines: 1, fontWeight: 500, color: white,),
-            //               ),
-            //               Tab(
-            //                 child: CustomText(value: upcomingTitle, maxLines: 1, fontWeight: 500, color: white,),
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //         SizedBox(height: 20,),
-            //         Expanded(
-            //           child: isLoading == true
-            //               ? Center(
-            //             child: CircularProgressIndicator(
-            //               color: primary,
-            //             ),
-            //           ) :
-            //           TabBarView(
-            //             physics: BouncingScrollPhysics(),
-            //             children: [
-            //               _dateOfCompletedEvent.isEmpty ? Center(child: CustomText(value: "Events Not Available", maxLines: 2, fontWeight: 500, fontSize: 22,),) :
-            //               SingleChildScrollView(
-            //                 child: MediaQuery.removePadding(
-            //                   context: context,
-            //                   removeTop: true,
-            //                   child: Padding(
-            //                     padding: Util.leftRightPadding,
-            //                     child: ListView.separated(
-            //                       shrinkWrap: true,
-            //                       physics: NeverScrollableScrollPhysics(),
-            //                       itemCount: _dateOfCompletedEvent.length,
-            //                       itemBuilder: (context, dateIndex) {
-            //                         String eventDate = _dateOfCompletedEvent[dateIndex];
-            //                         bool isToday = DateFormat('dd-MM-yyyy').format(DateTime.parse("$eventDate")) == DateFormat('dd-MM-yyyy').format(DateTime.now());
-            //                         bool isYesterday = DateFormat('dd-MM-yyyy').format(DateTime.parse("$eventDate")) == DateFormat('dd-MM-yyyy').format(DateTime.now().subtract(Duration(days: 1)));
-            //                         String dateTitle = isToday ? todayTitle : isYesterday ? yesterdayTitle : eventDate;
-            //                         return Column(
-            //                           crossAxisAlignment: CrossAxisAlignment.start,
-            //                           children: [
-            //                             CustomText(value: dateTitle, maxLines: 1, fontWeight: 500, fontSize: 20, color: primary,),
-            //                             SizedBox(height: 15,),
-            //                             MediaQuery.removePadding(
-            //                               context: context,
-            //                               removeTop: true,
-            //                               child: ListView.separated(
-            //                                 shrinkWrap: true,
-            //                                 physics: NeverScrollableScrollPhysics(),
-            //                                 itemCount: _completedEventData[eventDate]!.length,
-            //                                 itemBuilder: (context, eventIndex) {
-            //                                   AllEventData eventDetail = _completedEventData[eventDate]![eventIndex];
-            //                                   return EventCard(
-            //                                       "${eventDetail.startTime} - ${eventDetail.endTime}",
-            //                                       eventDetail.eventName!,
-            //                                       eventDetail.note!,
-            //                                           (){
-            //                                         Navigator.of(context).pushNamed(EventDetail.route,
-            //                                           arguments: EventDetailData(
-            //                                               data: eventDetail,
-            //                                               onChangeEvent: () {
-            //                                                 _getAllEventParent!.loadData();
-            //                                               }
-            //                                           ),
-            //                                         );
-            //                                       },
-            //                                           (val){
-            //                                         if(val == delete) {
-            //                                           _deleteEventParent!.loadData(eventDetail.id!);
-            //                                         }
-            //                                         else if(val == edit) {
-            //                                           eventModel(context, AddEditEvent(eventData: AddEditEventData(data: eventDetail),)).then((value) {
-            //                                             _getAllEventParent!.loadData();
-            //                                           });
-            //                                         }
-            //                                       }
-            //                                   );
-            //                                 },
-            //                                 separatorBuilder:(BuildContext context, int index){
-            //                                   return SizedBox(height: 10);
-            //                                 },
-            //                               ),
-            //                             )
-            //                           ],
-            //                         );
-            //                       },
-            //                       separatorBuilder:(BuildContext context, int index){
-            //                         return SizedBox(height: 10);
-            //                       },
-            //                     ),
-            //                   ),
-            //                 ),
-            //               ),
-            //               _dateOfUpcomingEvent.isEmpty ? Center(child: CustomText(value: "Events Not Available", maxLines: 2, fontWeight: 500, fontSize: 22,),) :
-            //               SingleChildScrollView(
-            //                 child: MediaQuery.removePadding(
-            //                   context: context,
-            //                   removeTop: true,
-            //                   child: Padding(
-            //                     padding: Util.leftRightPadding,
-            //                     child: ListView.separated(
-            //                       shrinkWrap: true,
-            //                       physics: NeverScrollableScrollPhysics(),
-            //                       itemCount: _dateOfUpcomingEvent.length,
-            //                       itemBuilder: (context, dateIndex) {
-            //                         String eventDate = _dateOfUpcomingEvent[dateIndex];
-            //                         bool isToday = DateFormat('dd-MM-yyyy').format(DateTime.parse("$eventDate")) == DateFormat('dd-MM-yyyy').format(DateTime.now());
-            //                         bool isTomorrow = DateFormat('dd-MM-yyyy').format(DateTime.parse("$eventDate")) == DateFormat('dd-MM-yyyy').format(DateTime.now().add(Duration(days: 1)));
-            //                         String dateTitle = isToday ? todayTitle : isTomorrow ? tomorrowTitle : eventDate;
-            //                         return Column(
-            //                           crossAxisAlignment: CrossAxisAlignment.start,
-            //                           children: [
-            //                             CustomText(value: dateTitle, maxLines: 1, fontWeight: 500, fontSize: 20, color: primary,),
-            //                             SizedBox(height: 15,),
-            //                             MediaQuery.removePadding(
-            //                               context: context,
-            //                               removeTop: true,
-            //                               child: ListView.separated(
-            //                                 shrinkWrap: true,
-            //                                 physics: NeverScrollableScrollPhysics(),
-            //                                 itemCount: _upcomingEventData[eventDate]!.length,
-            //                                 itemBuilder: (context, eventIndex) {
-            //                                   AllEventData eventDetail = _upcomingEventData[eventDate]![eventIndex];
-            //                                   return EventCard(
-            //                                       "${eventDetail.startTime} - ${eventDetail.endTime}",
-            //                                       eventDetail.eventName!,
-            //                                       eventDetail.note!,
-            //                                           (){
-            //                                         Navigator.of(context).pushNamed(EventDetail.route,
-            //                                           arguments: EventDetailData(
-            //                                               data: eventDetail,
-            //                                               onChangeEvent: () {
-            //                                                 _getAllEventParent!.loadData();
-            //                                               }
-            //                                           ),
-            //                                         );
-            //                                       },
-            //                                           (val){
-            //                                         if(val == delete) {
-            //                                           _deleteEventParent!.loadData(eventDetail.id!);
-            //                                         }
-            //                                         else if(val == edit) {
-            //                                           eventModel(context, AddEditEvent(eventData: AddEditEventData(data: eventDetail),)).then((value) {
-            //                                             _getAllEventParent!.loadData();
-            //                                           });
-            //                                         }
-            //                                       }
-            //                                   );
-            //                                 },
-            //                                 separatorBuilder:(BuildContext context, int index){
-            //                                   return SizedBox(height: 10);
-            //                                 },
-            //                               ),
-            //                             )
-            //                           ],
-            //                         );
-            //                       },
-            //                       separatorBuilder:(BuildContext context, int index){
-            //                         return SizedBox(height: 10);
-            //                       },
-            //                     ),
-            //                   ),
-            //                 ),
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
 
             SizedBox(height: Util.bottomBarHeight! + Util.paddingValue,),
           ],

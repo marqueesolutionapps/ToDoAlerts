@@ -17,6 +17,7 @@ const String welcomeTitle = "Welcome!";
 const String organizeYorDayTitle = "It's Time to Organize your Day!";
 
 const String saveTitle = "Save";
+const String cancelTitle = "Cancel";
 const String submitTitle = "Submit";
 const String historyTitle = "History";
 const String notificationTitle = "Notification";

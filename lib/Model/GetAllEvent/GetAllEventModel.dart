@@ -48,6 +48,7 @@ class AllEventData {
   String? userId;
   String? categoryName;
   String? categoryColor;
+  String? startUTCTime;
 
   AllEventData({this.id,
     this.deviceId,
@@ -60,7 +61,8 @@ class AllEventData {
     this.categoryId,
     this.userId,
     this.categoryName,
-    this.categoryColor});
+    this.categoryColor,
+    this.startUTCTime});
 
   AllEventData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -75,6 +77,7 @@ class AllEventData {
     userId = json['user_id'];
     categoryName = json['category_name'];
     categoryColor = json['category_color'];
+    startUTCTime = json['start_utc_time'];
   }
 
   Map<String, dynamic> toJson() {
@@ -91,6 +94,7 @@ class AllEventData {
     data['user_id'] = this.userId;
     data['category_name'] = this.categoryName;
     data['category_color'] = this.categoryColor;
+    data['start_utc_time'] = this.startUTCTime;
     return data;
   }
 }

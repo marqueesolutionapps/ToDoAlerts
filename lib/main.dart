@@ -161,10 +161,10 @@ class _ToDoAlertsState extends State<ToDoAlerts> implements UpdateTokenDataContr
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-        _showForegroundNotification(
-          title: message.notification?.title ?? '',
-          body: message.notification?.body ?? '',
-        );
+        // _showForegroundNotification(
+        //   title: message.notification?.title ?? '',
+        //   body: message.notification?.body ?? '',
+        // );
         RemoteNotification notification = message.notification!;
         if (notification != null && !kIsWeb) {
           flutterLocalNotificationsPlugin.show(
@@ -187,6 +187,7 @@ class _ToDoAlertsState extends State<ToDoAlerts> implements UpdateTokenDataContr
     }
 
     await FirebaseMessaging.instance.getToken().then((token) async {
+      print("TOKEN $token");
       await SPUtil.setToken(token ?? '');
       if(SPUtil.getToken().isNotEmpty && SPUtil.getDeviceId().isNotEmpty && SPUtil.getUserId().isNotEmpty) {
         _updateTokenParent!.loadData();
@@ -319,7 +320,13 @@ class _ToDoAlertsState extends State<ToDoAlerts> implements UpdateTokenDataContr
   @override
   Widget build(BuildContext context) {
     setState(() {
-      SPUtil.setTheme(MediaQuery.platformBrightnessOf(context) == Brightness.dark ? darkTheme : lightTheme);
+
+      if(MediaQuery.platformBrightnessOf(context) == Brightness.dark) {
+        SPUtil.setTheme(darkTheme);
+      }
+      else {
+        SPUtil.setTheme(SPUtil.getTheme());
+      }
       themeColorSet();
     });
     return LayoutBuilder(

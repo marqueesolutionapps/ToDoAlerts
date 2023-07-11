@@ -36,8 +36,9 @@ class AddEditEventData {
   String? categoryId;
   String? userId;
   String? categoryName;
+  String? startUTCTime;
 
-  AddEditEventData({this.id, this.deviceId, this.userId, this.categoryName, this.date, this.startTime, this.endTime, this.categoryId, this.eventName, this.note, this.remindMe});
+  AddEditEventData({this.id, this.deviceId, this.userId, this.categoryName, this.date, this.startTime, this.endTime, this.categoryId, this.eventName, this.note, this.remindMe, this.startUTCTime});
 
   AddEditEventData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -51,6 +52,7 @@ class AddEditEventData {
     categoryId = json['category_id'];
     userId = json['user_id'];
     categoryName = json['category_name'];
+    startUTCTime = json['start_utc_time'];
   }
 
   Map<String, dynamic> toJson() {
@@ -66,6 +68,7 @@ class AddEditEventData {
     data['category_id'] = this.categoryId;
     data['user_id'] = this.userId;
     data['category_name'] = this.categoryName;
+    data['start_utc_time'] = this.startUTCTime;
     return data;
   }
 }

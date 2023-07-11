@@ -518,7 +518,7 @@ class _AddEditEventState extends State<AddEditEvent> implements GetAllCategoryDa
         isTimeValidate = false;
         isLoading = true;
       });
-      _addEditEventParent!.loadData(widget.eventData != null ? widget.eventData!.data!.id! : "", eventNameCTRL!.text, noteCTRL!.text, DateFormat('yyyy-MM-dd').format(date!), DateFormat("HH:mm:ss").format(startTime!), DateFormat("HH:mm:ss").format(endTime!), isRemindMe!, selectedCategory!);
+      _addEditEventParent!.loadData(widget.eventData != null ? widget.eventData!.data!.id! : "", eventNameCTRL!.text, noteCTRL!.text, DateFormat('yyyy-MM-dd').format(date!), DateFormat("HH:mm:ss").format(startTime!), DateFormat("HH:mm:ss").format(endTime!), DateFormat("yyyy-MM-dd HH:mm").format(startTime!.toUtc()), isRemindMe!, selectedCategory!);
     }
     else if(startTime!.isAfter(endTime!)) {
       setState(() {
@@ -554,10 +554,10 @@ class _AddEditEventState extends State<AddEditEvent> implements GetAllCategoryDa
           isLoadingCategory = false;
           isAddCategory = false;
         });
+        if(isEvent == true) {
+          Navigator.of(context).pop();
+        }
       });
-      if(isEvent == true) {
-        Navigator.of(context).pop();
-      }
     }
   }
 

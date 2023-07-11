@@ -10,6 +10,7 @@ const String calendarIcon = "${_path}calendarIcon.svg";
 const String clockIcon = "${_path}clockIcon.svg";
 const String notificationIcon = "${_path}notificationIcon.svg";
 const String profileIcon = "${_path}profileIcon.svg";
+const String appIcon = "${_path}AppIcon.svg";
 
 const String splashGirl = "${_pathImg}splashGirl.png";
 const String addUserGirl = "${_pathImg}addUserGirl.png";

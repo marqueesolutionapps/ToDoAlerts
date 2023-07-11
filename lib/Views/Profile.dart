@@ -77,8 +77,8 @@ class _ProfileState extends State<Profile> implements AddEditUserDataController 
                               ),
                             ],
                           ),
-                          child: Image.asset(
-                            addUserGirl,
+                          child: SvgPicture.asset(
+                            appIcon,
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -163,175 +163,195 @@ class _ProfileState extends State<Profile> implements AddEditUserDataController 
                       ),
                       SizedBox(height: 20,),
                       if(isEdit == true)
-                        isLoading == true ? CircularProgressIndicator(color: primary,) : GestureDetector(
-                          onTap: () {
-                            saveData();
-                          },
-                          child: CustomButton(
-                            primary,
-                            submitTitle,
-                          ),
+                        isLoading == true ? CircularProgressIndicator(color: primary,) : Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  saveData();
+                                },
+                                child: CustomButton(
+                                  primary,
+                                  submitTitle,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10,),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isEdit = false;
+                                  });
+                                },
+                                child: CustomButton(
+                                  primary,
+                                  cancelTitle,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                     ],
                   ),
                 ),
               )
                   : Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 40,),
-                      Center(
-                        child: Container(
-                          height: Util.screenWidth! * 0.35,
-                          width: Util.screenWidth! * 0.35,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: grey.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 20,
-                              ),
-                            ],
-                          ),
-                          child: Image.asset(
-                            addUserGirl,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 25,),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CustomText(
-                              value: nameTitle,
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isEdit = true;
-                              });
-                            },
-                            child: Icon(
-                              Icons.mode_edit_outline_rounded,
-                              size: 25,
-                              color: themeTextDefaultColor,
-                            ),
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 40,),
+                  Center(
+                    child: Container(
+                      height: Util.screenWidth! * 0.35,
+                      width: Util.screenWidth! * 0.35,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 20,
                           ),
                         ],
                       ),
-                      SizedBox(height: 10,),
-                      CustomText(value: SPUtil.getUserName(), maxLines: 2, color: hintGrey, fontWeight: 900, textAlign: TextAlign.start,),
-                      SizedBox(height: 25,),
-                      CustomText(value: emailTitle, maxLines: 1, textAlign: TextAlign.start,),
-                      SizedBox(height: 10,),
-                      CustomText(value: SPUtil.getUserEmail(), maxLines: 2, color: hintGrey, fontWeight: 900, textAlign: TextAlign.start,),
-                      SizedBox(height: 25,),
-                      CustomText(value: "$phoneTitle $numberTitle", maxLines: 1, textAlign: TextAlign.start,),
-                      SizedBox(height: 10,),
-                      CustomText(value: SPUtil.getUserPhoneNumber(), maxLines: 2, color: hintGrey, fontWeight: 900, textAlign: TextAlign.start,),
-                      SizedBox(height: 25,),
-                      Divider(
-                        height: 2,
-                        thickness: 2,
-                        color: greyBorder,
+                      child: SvgPicture.asset(
+                        appIcon,
+                        fit: BoxFit.fill,
                       ),
-                      SizedBox(height: 25,),
-                      CustomText(value: themeTitle, maxLines: 1, textAlign: TextAlign.start,),
-                      SizedBox(height: 10,),
-                      CustomDropDownField(
-                        selectedCategoryLabel: SPUtil.getTheme(),
-                        dropDownItemValue: MediaQuery.removePadding(
-                          removeTop: true,
-                          context: context,
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: themeList.length,
-                            itemBuilder: (context, index) {
-                              return DropDownItem(
-                                themeList[index],
-                                    () {
-                                  setState(() {
-                                    SPUtil.setTheme(themeList[index]);
-                                    if(SPUtil.getTheme() == darkTheme) {
-                                      for(var i = 0; i < themeColorList.length; i++) {
-                                        if(themeColorList[i].colorName == SPUtil.getThemeColor()) {
-                                          setState(() {
-                                            primary = themeColorList[i].color;
-                                            scaffoldBackgroundColor = black;
-                                            themeTextDefaultColor = white;
-                                            bottomBarColor = blackGrey;
-                                            bottomBarItemAndDayNameColor = white;
-                                            cardAndDialogBackgroundColor = blackGrey;
-                                            textFormFieldFillColor = blackGrey;
-                                            widget.profileData.onThemeChange!.call();
-                                          });
-                                        }
-                                      }
-                                    }
-                                    else {
-                                      for(var i = 0; i < themeColorList.length; i++) {
-                                        if(themeColorList[i].colorName == SPUtil.getThemeColor()) {
-                                          setState(() {
-                                            primary = themeColorList[i].color;
-                                            scaffoldBackgroundColor = white;
-                                            themeTextDefaultColor = blackTitle;
-                                            bottomBarColor = white;
-                                            bottomBarItemAndDayNameColor = subtitleGrey;
-                                            cardAndDialogBackgroundColor = white;
-                                            textFormFieldFillColor = fillGray;
-                                            widget.profileData.onThemeChange!.call();
-                                          });
-                                        }
-                                      }
-                                    }
-                                  });
-
-                                },
-                              );
-                            },
-                            separatorBuilder:(BuildContext context, int index){
-                              return const SizedBox(height: 15,);
-                            },
-                          ),
+                    ),
+                  ),
+                  SizedBox(height: 25,),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomText(
+                          value: nameTitle,
+                          maxLines: 1,
+                          textAlign: TextAlign.start,
                         ),
                       ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 25,),
-                            CustomText(value: "$themeTitle $colorTitle", maxLines: 1, textAlign: TextAlign.start,),
-                            SizedBox(height: 10,),
-                            Wrap(
-                              spacing: 15,
-                              runSpacing: 15,
-                              children: [
-                                for(var i=0 ; i < themeColorList.length ; i++)
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        SPUtil.setThemeColor(themeColorList[i].colorName);
-                                        primary = themeColorList[i].color;
-                                        widget.profileData.onThemeChange!.call();
-                                      });
-                                    },
-                                    child: CustomColorButton(
-                                      SPUtil.getThemeColor() == themeColorList[i].colorName ? true : false,
-                                      themeColorList[i].color,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ],
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isEdit = true;
+                          });
+                        },
+                        child: Icon(
+                          Icons.mode_edit_outline_rounded,
+                          size: 25,
+                          color: themeTextDefaultColor,
                         ),
+                      ),
                     ],
                   ),
+                  SizedBox(height: 10,),
+                  CustomText(value: SPUtil.getUserName(), maxLines: 2, color: hintGrey, fontWeight: 900, textAlign: TextAlign.start,),
+                  SizedBox(height: 25,),
+                  CustomText(value: emailTitle, maxLines: 1, textAlign: TextAlign.start,),
+                  SizedBox(height: 10,),
+                  CustomText(value: SPUtil.getUserEmail(), maxLines: 2, color: hintGrey, fontWeight: 900, textAlign: TextAlign.start,),
+                  SizedBox(height: 25,),
+                  CustomText(value: "$phoneTitle $numberTitle", maxLines: 1, textAlign: TextAlign.start,),
+                  SizedBox(height: 10,),
+                  CustomText(value: SPUtil.getUserPhoneNumber(), maxLines: 2, color: hintGrey, fontWeight: 900, textAlign: TextAlign.start,),
+                  SizedBox(height: 25,),
+                  Divider(
+                    height: 2,
+                    thickness: 2,
+                    color: greyBorder,
+                  ),
+                  SizedBox(height: 25,),
+                  CustomText(value: themeTitle, maxLines: 1, textAlign: TextAlign.start,),
+                  SizedBox(height: 10,),
+                  CustomDropDownField(
+                    selectedCategoryLabel: SPUtil.getTheme(),
+                    dropDownItemValue: MediaQuery.removePadding(
+                      removeTop: true,
+                      context: context,
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: themeList.length,
+                        itemBuilder: (context, index) {
+                          return DropDownItem(
+                            themeList[index],
+                                () {
+                              setState(() {
+                                SPUtil.setTheme(themeList[index]);
+                                if(SPUtil.getTheme() == darkTheme) {
+                                  for(var i = 0; i < themeColorList.length; i++) {
+                                    if(themeColorList[i].colorName == SPUtil.getThemeColor()) {
+                                      setState(() {
+                                        primary = themeColorList[i].color;
+                                        scaffoldBackgroundColor = black;
+                                        themeTextDefaultColor = white;
+                                        bottomBarColor = blackGrey;
+                                        bottomBarItemAndDayNameColor = white;
+                                        cardAndDialogBackgroundColor = blackGrey;
+                                        textFormFieldFillColor = blackGrey;
+                                        widget.profileData.onThemeChange!.call();
+                                      });
+                                    }
+                                  }
+                                }
+                                else {
+                                  for(var i = 0; i < themeColorList.length; i++) {
+                                    if(themeColorList[i].colorName == SPUtil.getThemeColor()) {
+                                      setState(() {
+                                        primary = themeColorList[i].color;
+                                        scaffoldBackgroundColor = white;
+                                        themeTextDefaultColor = blackTitle;
+                                        bottomBarColor = white;
+                                        bottomBarItemAndDayNameColor = subtitleGrey;
+                                        cardAndDialogBackgroundColor = white;
+                                        textFormFieldFillColor = fillGray;
+                                        widget.profileData.onThemeChange!.call();
+                                      });
+                                    }
+                                  }
+                                }
+                              });
+
+                            },
+                          );
+                        },
+                        separatorBuilder:(BuildContext context, int index){
+                          return const SizedBox(height: 15,);
+                        },
+                      ),
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 25,),
+                      CustomText(value: "$themeTitle $colorTitle", maxLines: 1, textAlign: TextAlign.start,),
+                      SizedBox(height: 10,),
+                      Wrap(
+                        spacing: 15,
+                        runSpacing: 15,
+                        children: [
+                          for(var i=0 ; i < themeColorList.length ; i++)
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  SPUtil.setThemeColor(themeColorList[i].colorName);
+                                  primary = themeColorList[i].color;
+                                  widget.profileData.onThemeChange!.call();
+                                });
+                              },
+                              child: CustomColorButton(
+                                SPUtil.getThemeColor() == themeColorList[i].colorName ? true : false,
+                                themeColorList[i].color,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(height: Util.bottomBarHeight,),

@@ -6,7 +6,7 @@ class AddEditEventParent  {
   AddEditEventDataController? contract;
 
   AddEditEventParent(this.contract);
-  void loadData(String id, String eventName, String eventNote, String eventDate, String eventStartTime, String eventEndTime, bool isRemindMe, String categoryID) {
+  void loadData(String id, String eventName, String eventNote, String eventDate, String eventStartTime, String eventEndTime, String utcDateTime, bool isRemindMe, String categoryID) {
     InternetChecker.checkInternet().then((value) async {
       try {
         if(value) {
@@ -20,12 +20,13 @@ class AddEditEventParent  {
             'date': eventDate,
             'start_time': eventStartTime,
             'end_time': eventEndTime,
+            'utc_time': utcDateTime,
             'remind_me': isRemindMe == true ? "1" : "0",
             'category_id': categoryID,
           });
           var streamResponse = await request.send();
           final response = await http.Response.fromStream(streamResponse);
-          // Util.consoleLog("response.body Add Edit Event ${response.body}");
+          Util.consoleLog("response.body Add Edit Event ${response.body}");
           var data;
           if(response.body!="") {
             data= json.decode(response.body);
