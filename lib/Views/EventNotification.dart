@@ -270,7 +270,7 @@ class _EventNotificationState extends State<EventNotification> {
               ],
             ),
           ),
-          SizedBox(height: Util.bottomBarHeight,),
+          SizedBox(height: Util.bottomBarHeight! - 10,),
         ],
       ),
     );
@@ -301,7 +301,7 @@ class _EventNotificationState extends State<EventNotification> {
               SizedBox(height: 12,),
             Row(
               children: [
-                CustomRoundMarker(primary, 15),
+                CustomRoundMarker(primary, 10),
                 SizedBox(width: 10,),
                 Expanded(child: CustomText(value: timeAway, maxLines: 1, color: subtitleGrey, fontSize: 12, fontWeight: 600, textAlign: TextAlign.start,),),
                 SizedBox(width: 10,),

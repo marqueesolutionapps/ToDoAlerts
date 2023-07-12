@@ -28,6 +28,53 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
+  await storeNotificationRecord(message);
+
+  // Map<String, dynamic> objectData = {};
+  // if (message.notification != null) {
+  //   objectData = {
+  //     DatabaseHelper.notificationColumnTimeStamp:
+  //     DateFormat("MM/dd/yyyy HH:mm:ss").format(DateTime.now()),
+  //     DatabaseHelper.notificationColumnBody: message.notification!.body,
+  //     DatabaseHelper.notificationColumnTitle: message.notification!.title,
+  //     DatabaseHelper.notificationColumnStatus: 1
+  //   };
+  //   await DatabaseHelper.instance
+  //       .insertRecord(dbNotificationTable, objectData);
+  // } else if (message.data != null) {
+  //   objectData = {
+  //     DatabaseHelper.notificationColumnTimeStamp:
+  //     DateFormat("MM/dd/yyyy HH:mm:ss").format(DateTime.now()),
+  //     DatabaseHelper.notificationColumnBody: message.notification!.body,
+  //     DatabaseHelper.notificationColumnTitle: message.notification!.title,
+  //     DatabaseHelper.notificationColumnStatus: 1
+  //   };
+  //   await DatabaseHelper.instance
+  //       .insertRecord(dbNotificationTable, objectData);
+  // }
+  //
+  // int count = SPUtil.getBadgeCount() ?? 0;
+  // FlutterAppBadger.updateBadgeCount(count + 1);
+  // await SPUtil.setBadgeCount(count + 1);
+}
+
+Future<void> appTrackingPermission() async {
+  try {
+    // If the system can show an authorization request dialog
+    var status = await AppTrackingTransparency.trackingAuthorizationStatus;
+    print("App Tracking Permission Status $status");
+    if (status == TrackingStatus.notDetermined) {
+      await AppTrackingTransparency.requestTrackingAuthorization();
+    }
+    await AppTrackingTransparency.getAdvertisingIdentifier();
+  } on PlatformException {
+    print(PlatformException(code: "Permission").message);
+  }
+
+  PermissionHandler.determineNotification();
+}
+
+Future<void> storeNotificationRecord(RemoteMessage message) async {
   Map<String, dynamic> objectData = {};
   if (message.notification != null) {
     objectData = {
@@ -50,26 +97,10 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     await DatabaseHelper.instance
         .insertRecord(dbNotificationTable, objectData);
   }
-
+  await SPUtil.getInstance();
   int count = SPUtil.getBadgeCount() ?? 0;
   FlutterAppBadger.updateBadgeCount(count + 1);
   await SPUtil.setBadgeCount(count + 1);
-}
-
-Future<void> appTrackingPermission() async {
-  try {
-    // If the system can show an authorization request dialog
-    var status = await AppTrackingTransparency.trackingAuthorizationStatus;
-    print("App Tracking Permission Status $status");
-    if (status == TrackingStatus.notDetermined) {
-      await AppTrackingTransparency.requestTrackingAuthorization();
-    }
-    await AppTrackingTransparency.getAdvertisingIdentifier();
-  } on PlatformException {
-    print(PlatformException(code: "Permission").message);
-  }
-
-  PermissionHandler.determineNotification();
 }
 
 void main() async {
@@ -215,34 +246,34 @@ class _ToDoAlertsState extends State<ToDoAlerts> implements UpdateTokenDataContr
     flutterLocalNotificationsPlugin.show(0, title, body, notificationDetails);
   }
 
-  Future<void> storeNotificationRecord(RemoteMessage message) async {
-    Map<String, dynamic> objectData = {};
-    if (message.notification != null) {
-      objectData = {
-        DatabaseHelper.notificationColumnTimeStamp:
-        DateFormat("MM/dd/yyyy HH:mm:ss").format(DateTime.now()),
-        DatabaseHelper.notificationColumnBody: message.notification!.body,
-        DatabaseHelper.notificationColumnTitle: message.notification!.title,
-        DatabaseHelper.notificationColumnStatus: 1
-      };
-      await DatabaseHelper.instance
-          .insertRecord(dbNotificationTable, objectData);
-    } else if (message.data != null) {
-      objectData = {
-        DatabaseHelper.notificationColumnTimeStamp:
-        DateFormat("MM/dd/yyyy HH:mm:ss").format(DateTime.now()),
-        DatabaseHelper.notificationColumnBody: message.notification!.body,
-        DatabaseHelper.notificationColumnTitle: message.notification!.title,
-        DatabaseHelper.notificationColumnStatus: 1
-      };
-      await DatabaseHelper.instance
-          .insertRecord(dbNotificationTable, objectData);
-    }
-    await SPUtil.getInstance();
-    int count = SPUtil.getBadgeCount() ?? 0;
-    FlutterAppBadger.updateBadgeCount(count + 1);
-    await SPUtil.setBadgeCount(count + 1);
-  }
+  // Future<void> storeNotificationRecord(RemoteMessage message) async {
+  //   Map<String, dynamic> objectData = {};
+  //   if (message.notification != null) {
+  //     objectData = {
+  //       DatabaseHelper.notificationColumnTimeStamp:
+  //       DateFormat("MM/dd/yyyy HH:mm:ss").format(DateTime.now()),
+  //       DatabaseHelper.notificationColumnBody: message.notification!.body,
+  //       DatabaseHelper.notificationColumnTitle: message.notification!.title,
+  //       DatabaseHelper.notificationColumnStatus: 1
+  //     };
+  //     await DatabaseHelper.instance
+  //         .insertRecord(dbNotificationTable, objectData);
+  //   } else if (message.data != null) {
+  //     objectData = {
+  //       DatabaseHelper.notificationColumnTimeStamp:
+  //       DateFormat("MM/dd/yyyy HH:mm:ss").format(DateTime.now()),
+  //       DatabaseHelper.notificationColumnBody: message.notification!.body,
+  //       DatabaseHelper.notificationColumnTitle: message.notification!.title,
+  //       DatabaseHelper.notificationColumnStatus: 1
+  //     };
+  //     await DatabaseHelper.instance
+  //         .insertRecord(dbNotificationTable, objectData);
+  //   }
+  //   await SPUtil.getInstance();
+  //   int count = SPUtil.getBadgeCount() ?? 0;
+  //   FlutterAppBadger.updateBadgeCount(count + 1);
+  //   await SPUtil.setBadgeCount(count + 1);
+  // }
 
   Future<void> initSP() async {
     await SPUtil.getInstance();

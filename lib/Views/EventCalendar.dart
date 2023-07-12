@@ -102,7 +102,7 @@ class _EventCalendarState extends State<EventCalendar> implements GetAllEventDat
                   ),
                 ),
               ),
-              SizedBox(height: Util.bottomBarHeight,),
+              SizedBox(height: Util.bottomBarHeight! - 10,),
             ],
           ),
         ),

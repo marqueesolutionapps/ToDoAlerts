@@ -79,7 +79,7 @@ class _EventDetailState extends State<EventDetail> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                CustomRoundMarker(primary, 15),
+                                CustomRoundMarker(primary, 10),
                                 SizedBox(width: 7.5,),
                                 Flexible(child: CustomText(value: "${widget.eventData!.data!.startTime!}-${widget.eventData!.data!.endTime!}", maxLines: 2, color: subtitleGrey, fontSize: 16, fontWeight: 600, textAlign: TextAlign.end,)),
                               ],

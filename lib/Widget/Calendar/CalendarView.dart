@@ -150,7 +150,7 @@ class _CalendarViewPageState extends State<CalendarViewPage> {
               ),
               child: CustomText(value: '${calendarDate.date!.day}', fontSize: 12, fontWeight: 500, maxLines: 1, color: subtitleGrey),
             ),
-            CustomRoundMarker(isEventAvailable ? subtitleGrey : Colors.transparent, 5),
+            CustomRoundMarkerForCalendar(isEventAvailable ? subtitleGrey : Colors.transparent, scaffoldBackgroundColor, 7.5),
             SizedBox(height: 2.5,)
           ],
         ) :
@@ -175,7 +175,7 @@ class _CalendarViewPageState extends State<CalendarViewPage> {
                   color: _selectedDateTime == calendarDate.date ? white : calendarDate.date==_todayDate? primary : themeTextDefaultColor,
                 ),
             ),
-            CustomRoundMarker(isEventAvailable ? primary : Colors.transparent, 5),
+            CustomRoundMarkerForCalendar(isEventAvailable ? primary : Colors.transparent, scaffoldBackgroundColor, 7.5),
             SizedBox(height: 2.5,)
           ],
         ),

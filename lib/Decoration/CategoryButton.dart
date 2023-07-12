@@ -14,7 +14,7 @@ Widget CategoryButton(Color borderColor, Color backgroundColor, Color markerColo
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CustomRoundMarker(markerColor, 15),
+        CustomRoundMarker(markerColor, 10),
         SizedBox(width: 7.5,),
         CustomText(value: buttonText, maxLines: 1, fontWeight: 700, fontSize: fontSize, height: 1,),
       ],

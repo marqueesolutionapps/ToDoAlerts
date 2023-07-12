@@ -266,7 +266,7 @@ class _EventHistoryState extends State<EventHistory> with SingleTickerProviderSt
               ),
             ),
 
-            SizedBox(height: Util.bottomBarHeight! + Util.paddingValue,),
+            SizedBox(height: Util.bottomBarHeight! + Util.paddingValue - 10,),
           ],
         ),
         Positioned(

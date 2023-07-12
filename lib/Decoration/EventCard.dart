@@ -21,7 +21,7 @@ Widget EventCard(String time, String eventTitle, String eventDescription, Gestur
         children: [
           Row(
             children: [
-              CustomRoundMarker(primary, 15),
+              CustomRoundMarker(primary, 10),
               SizedBox(width: 10,),
               Expanded(child: CustomText(value: time, maxLines: 1, color: subtitleGrey, fontSize: 12, fontWeight: 600, textAlign: TextAlign.start,),),
               SizedBox(width: 10,),

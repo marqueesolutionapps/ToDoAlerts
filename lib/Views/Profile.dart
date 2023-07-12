@@ -329,8 +329,8 @@ class _ProfileState extends State<Profile> implements AddEditUserDataController 
                       CustomText(value: "$themeTitle $colorTitle", maxLines: 1, textAlign: TextAlign.start,),
                       SizedBox(height: 10,),
                       Wrap(
-                        spacing: 15,
-                        runSpacing: 15,
+                        spacing: 10,
+                        runSpacing: 10,
                         children: [
                           for(var i=0 ; i < themeColorList.length ; i++)
                             GestureDetector(
@@ -354,7 +354,7 @@ class _ProfileState extends State<Profile> implements AddEditUserDataController 
               ),
             ),
           ),
-          SizedBox(height: Util.bottomBarHeight,),
+          SizedBox(height: Util.bottomBarHeight! - 10,),
         ],
       ),
     );
