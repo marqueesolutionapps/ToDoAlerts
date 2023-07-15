@@ -11,6 +11,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:synchronized/synchronized.dart';
+import 'package:in_app_review/in_app_review.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'App_Color.dart';
 part 'App_String.dart';
@@ -22,3 +25,4 @@ part 'SPUtil.dart';
 part 'InternetChecker.dart';
 part 'API_List.dart';
 part 'Permission_Handler.dart';
+part 'Launch_URL.dart';

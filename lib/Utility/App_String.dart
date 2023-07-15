@@ -3,7 +3,7 @@
 part of 'UtilityLibrary.dart';
 
 
-const String appStoreIdValue = "com.tools.todoalerts";
+const String appStoreIdValue = "com.scheduleplanner.todoalerts";
 
 const String lightTheme = "light";
 const String darkTheme = "dark";
@@ -50,10 +50,22 @@ const String eventHistoryPage= "Event History";
 const String eventNotificationPage= "Event Notification";
 const String profilePage= "Profile";
 
+const String eventCalendarPageTitle= "To Do List";
+const String eventHistoryPageTitle= "History";
+const String eventNotificationPageTitle= "Notification";
+const String profilePageTitle= "Profile";
+
 const String unauthorized = "Unauthorized";
 const String serverApiError = "Error 502";
 const String pleaseCheckInternetConnection="Please check your internet connection";
 const String somethingWrongString="Something Went Wrong";
+
+const String notNowTitle = "Not Now";
+const String rateUsTitle = "Rate Us";
+const String shareUsTitle = "Share Us";
+const String maybeLaterTitle = "Maybe Later";
+const String rateThisAppTitle = "Rate this app";
+const String rateThisAppDescription = "If you like this app, please take a little bit of your time and review it! It really helps us and it could not take you more than one minute.";
 
 const String dbNotificationTable = "allNotifications";
 

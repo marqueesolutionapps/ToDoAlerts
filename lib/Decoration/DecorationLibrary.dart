@@ -19,3 +19,4 @@ part 'CustomBackAndForwardButton.dart';
 part 'EventModel.dart';
 part 'CustomDateTimePicker.dart';
 part 'CustomBottomBar.dart';
+part 'CustomDialog.dart';

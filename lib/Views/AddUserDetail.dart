@@ -21,6 +21,9 @@ class _AddUserDetailState extends State<AddUserDetail> implements AddEditUserDat
   bool isLoading = false, snackBarShowing = false;
   AddEditUserParent? _addEditUserParent;
 
+  bool isDialogComplete = false;
+  bool isRateUsShow = false;
+
   _AddUserDetailState() {
     _addEditUserParent = AddEditUserParent(this);
   }
@@ -43,7 +46,24 @@ class _AddUserDetailState extends State<AddUserDetail> implements AddEditUserDat
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return true;
+        if(isDialogComplete == false) {
+          if(SPUtil.getRateApply() == false && SPUtil.getRateUsShowingDate().isEmpty) {
+            setState(() {
+              isRateUsShow = true;
+            });
+          }
+          else if(SPUtil.getRateApply() == false && (SPUtil.getRateUsShowingDate().isNotEmpty && (DateFormat("dd-MM-yyyy").parse(DateFormat('dd-MM-yyyy').format(DateTime.now())).isAfter(DateFormat("dd-MM-yyyy").parse(SPUtil.getRateUsShowingDate())) == true))) {
+            setState(() {
+              isRateUsShow = true;
+            });
+          }
+          else{
+            setState(() {
+              isDialogComplete = true;
+            });
+          }
+        }
+        return isDialogComplete == false ? false : true;
       },
       child: Scaffold(
         backgroundColor: scaffoldBackgroundColor,
@@ -186,7 +206,33 @@ class _AddUserDetailState extends State<AddUserDetail> implements AddEditUserDat
                     ],
                   ),
                 ),
-
+                if(isRateUsShow == true)
+                  RateUsDialog(
+                        (){
+                      setState(() {
+                        isDialogComplete = true;
+                        isRateUsShow = false;
+                      });
+                    },
+                        (){
+                      setState(() {
+                        SPUtil.setRateUsShowingDate(DateFormat('dd-MM-yyyy').format(DateTime.now()));
+                        isDialogComplete = true;
+                        isRateUsShow = false;
+                      });
+                    },
+                        (){
+                      setState(() {
+                        SPUtil.showRating().then((value) {
+                          setState(() {
+                            SPUtil.setRateApply(true);
+                          });
+                        });
+                        isDialogComplete = true;
+                        isRateUsShow = false;
+                      });
+                    },
+                  ),
               ],
             ),
           ),

@@ -5,7 +5,6 @@ part of 'UtilityLibrary.dart';
 class SPUtil {
   static SPUtil? _singleton;
   static SharedPreferences? _prefs;
-  // static SharedPreferences? _ratePrefs;
   static final Lock _lock = Lock();
 
   static Future<SPUtil?> getInstance() async {
@@ -24,47 +23,46 @@ class SPUtil {
   SPUtil._();
   Future _init() async {
     _prefs = await SharedPreferences.getInstance();
-    // _ratePrefs = await SharedPreferences.getInstance();
   }
 
-  // static Future<bool> showRating() async {
-  //   try {
-  //     final InAppReview inAppReview = InAppReview.instance;
-  //
-  //     final available = await inAppReview.isAvailable();
-  //
-  //     inAppReview.requestReview();
-  //     inAppReview.openStoreListing(
-  //       appStoreId: appStoreIdValue,
-  //     );
-  //
-  //     return true;
-  //   } catch (e) {
-  //     return false;
-  //   }
-  // }
+  static Future<bool> showRating() async {
+    try {
+      final InAppReview inAppReview = InAppReview.instance;
 
-  // //Rate Us Showing Data
-  // static String getRateUsShowingDate({String defValue = ''}) {
-  //   if (_ratePrefs == null) return defValue;
-  //   return _ratePrefs!.getString("RateUsShowingDate") ?? defValue;
-  // }
-  //
-  // static Future<bool>? setRateUsShowingDate(String displayString) {
-  //   if (_ratePrefs == null) return null;
-  //   return _ratePrefs!.setString("RateUsShowingDate", displayString);
-  // }
-  //
-  // //Rate Already Applied Or Nor
-  // static bool getRateApply({bool defValue = false}) {
-  //   if (_ratePrefs == null) return defValue;
-  //   return _ratePrefs!.getBool("RateApply") ?? defValue;
-  // }
-  //
-  // static Future<bool>? setRateApply(bool defValue) {
-  //   if (_ratePrefs == null) return null;
-  //   return _ratePrefs!.setBool("RateApply", defValue);
-  // }
+      final available = await inAppReview.isAvailable();
+
+      inAppReview.requestReview();
+      inAppReview.openStoreListing(
+        appStoreId: appStoreIdValue,
+      );
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  //Rate Us Showing Data
+  static String getRateUsShowingDate({String defValue = ''}) {
+    if (_prefs == null) return defValue;
+    return _prefs!.getString("RateUsShowingDate") ?? defValue;
+  }
+
+  static Future<bool>? setRateUsShowingDate(String displayString) {
+    if (_prefs == null) return null;
+    return _prefs!.setString("RateUsShowingDate", displayString);
+  }
+
+  //Rate Already Applied Or Nor
+  static bool getRateApply({bool defValue = false}) {
+    if (_prefs == null) return defValue;
+    return _prefs!.getBool("RateApply") ?? defValue;
+  }
+
+  static Future<bool>? setRateApply(bool defValue) {
+    if (_prefs == null) return null;
+    return _prefs!.setBool("RateApply", defValue);
+  }
 
   //Token
   static String getToken({String defValue = ''}) {

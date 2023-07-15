@@ -17,6 +17,9 @@ class _HomeState extends State<Home> {
 
   String selectedPage = eventCalendarPage;
 
+  bool isDialogComplete = false;
+  bool isRateUsShow = false;
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +29,24 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return true;
+        if(isDialogComplete == false) {
+          if(SPUtil.getRateApply() == false && SPUtil.getRateUsShowingDate().isEmpty) {
+            setState(() {
+              isRateUsShow = true;
+            });
+          }
+          else if(SPUtil.getRateApply() == false && (SPUtil.getRateUsShowingDate().isNotEmpty && (DateFormat("dd-MM-yyyy").parse(DateFormat('dd-MM-yyyy').format(DateTime.now())).isAfter(DateFormat("dd-MM-yyyy").parse(SPUtil.getRateUsShowingDate())) == true))) {
+            setState(() {
+              isRateUsShow = true;
+            });
+          }
+          else{
+            setState(() {
+              isDialogComplete = true;
+            });
+          }
+        }
+        return isDialogComplete == false ? false : true;
       },
       child: Scaffold(
         backgroundColor: scaffoldBackgroundColor,
@@ -74,6 +94,33 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
+                if(isRateUsShow == true)
+                  RateUsDialog(
+                        (){
+                      setState(() {
+                        isDialogComplete = true;
+                        isRateUsShow = false;
+                      });
+                    },
+                        (){
+                      setState(() {
+                        SPUtil.setRateUsShowingDate(DateFormat('dd-MM-yyyy').format(DateTime.now()));
+                        isDialogComplete = true;
+                        isRateUsShow = false;
+                      });
+                    },
+                        (){
+                      setState(() {
+                        SPUtil.showRating().then((value) {
+                          setState(() {
+                            SPUtil.setRateApply(true);
+                          });
+                        });
+                        isDialogComplete = true;
+                        isRateUsShow = false;
+                      });
+                    },
+                  ),
               ],
             ),
           ),

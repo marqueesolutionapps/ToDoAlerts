@@ -49,16 +49,156 @@ class _ProfileState extends State<Profile> implements AddEditUserDataController 
   Widget build(BuildContext context) {
     return Padding(
       padding: Util.paddingAll,
-      child: Column(
+      child: Stack(
         children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: isEdit == true
-                  ? Form(
-                key: _formKey,
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Column(
+          Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: isEdit == true
+                      ? Form(
+                    key: _formKey,
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 40,),
+                          Center(
+                            child: Container(
+                              height: Util.screenWidth! * 0.35,
+                              width: Util.screenWidth! * 0.35,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 20,
+                                  ),
+                                ],
+                              ),
+                              child: SvgPicture.asset(
+                                appIcon,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 25,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: CustomText(value: "$enterYour $nameTitle", maxLines: 1, textAlign: TextAlign.start,),
+                              ),
+                              SizedBox(height: 10,),
+                              CustomTextFormField(
+                                controller: userNameCTRL,
+                                hintText: "$enterYour $nameTitle",
+                                textAlign: TextAlign.start,
+                                inputFormatters: CustomTextInputFormat.acceptUserName,
+                                keyboardType: TextInputType.multiline,
+                                onTapOutside: (val) => Util.focusOut(context),
+                                fillColor: textFormFieldFillColor,
+                                validator: (input) {
+                                  if (input!.isEmpty) {
+                                    return "Please enter name.";
+                                  }
+                                  else if(input.trim().isEmpty) {
+                                    return "Only White Space Not Allowed";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(height: 25,),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: CustomText(value: "$enterYour $emailTitle", maxLines: 1, textAlign: TextAlign.start,),
+                              ),
+                              SizedBox(height: 10,),
+                              CustomTextFormField(
+                                controller: emailCTRL,
+                                hintText: "$enterYour $emailTitle",
+                                textAlign: TextAlign.start,
+                                inputFormatters: CustomTextInputFormat.acceptEmail,
+                                keyboardType: TextInputType.emailAddress,
+                                onTapOutside: (val) => Util.focusOut(context),
+                                fillColor: textFormFieldFillColor,
+                                validator: (input) {
+                                  if (input!.isEmpty) {
+                                    return "Please enter email address.";
+                                  }
+                                  else if (!Util.emailregExp
+                                      .hasMatch(input)) {
+                                    return "Please enter valid email address.";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(height: 25,),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: CustomText(value: "$enterYour $phoneTitle", maxLines: 1, textAlign: TextAlign.start,),
+                              ),
+                              SizedBox(height: 10,),
+                              CustomTextFormField(
+                                controller: phoneNumberCTRL,
+                                hintText: "$enterYour $phoneTitle $numberTitle",
+                                textAlign: TextAlign.start,
+                                inputFormatters: CustomTextInputFormat.acceptPhoneNumber,
+                                keyboardType: TextInputType.number,
+                                onTapOutside: (val) => Util.focusOut(context),
+                                fillColor: textFormFieldFillColor,
+                                validator: (input) {
+                                  if (input!.isEmpty) {
+                                    return "Please enter phone number.";
+                                  }
+                                  else if(input.length < 10) {
+                                    return "Please enter valid phone number.";
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20,),
+                          if(isEdit == true)
+                            isLoading == true ? CircularProgressIndicator(color: primary,) : Row(
+                              children: [
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      saveData();
+                                    },
+                                    child: CustomButton(
+                                      primary,
+                                      submitTitle,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 10,),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isEdit = false;
+                                      });
+                                    },
+                                    child: CustomButton(
+                                      primary,
+                                      cancelTitle,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
+                    ),
+                  )
+                      : Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -84,277 +224,163 @@ class _ProfileState extends State<Profile> implements AddEditUserDataController 
                         ),
                       ),
                       SizedBox(height: 25,),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomText(
+                              value: nameTitle,
+                              maxLines: 1,
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isEdit = true;
+                              });
+                            },
+                            child: Icon(
+                              Icons.mode_edit_outline_rounded,
+                              size: 25,
+                              color: themeTextDefaultColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      CustomText(value: SPUtil.getUserName(), maxLines: 2, color: hintGrey, fontWeight: 900, textAlign: TextAlign.start,),
+                      SizedBox(height: 25,),
+                      CustomText(value: emailTitle, maxLines: 1, textAlign: TextAlign.start,),
+                      SizedBox(height: 10,),
+                      CustomText(value: SPUtil.getUserEmail(), maxLines: 2, color: hintGrey, fontWeight: 900, textAlign: TextAlign.start,),
+                      SizedBox(height: 25,),
+                      CustomText(value: "$phoneTitle $numberTitle", maxLines: 1, textAlign: TextAlign.start,),
+                      SizedBox(height: 10,),
+                      CustomText(value: SPUtil.getUserPhoneNumber(), maxLines: 2, color: hintGrey, fontWeight: 900, textAlign: TextAlign.start,),
+                      SizedBox(height: 25,),
+                      Divider(
+                        height: 2,
+                        thickness: 2,
+                        color: greyBorder,
+                      ),
+                      SizedBox(height: 25,),
+                      CustomText(value: themeTitle, maxLines: 1, textAlign: TextAlign.start,),
+                      SizedBox(height: 10,),
+                      CustomDropDownField(
+                        selectedCategoryLabel: SPUtil.getTheme(),
+                        dropDownItemValue: MediaQuery.removePadding(
+                          removeTop: true,
+                          context: context,
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: themeList.length,
+                            itemBuilder: (context, index) {
+                              return DropDownItem(
+                                themeList[index],
+                                    () {
+                                  setState(() {
+                                    SPUtil.setTheme(themeList[index]);
+                                    if(SPUtil.getTheme() == darkTheme) {
+                                      for(var i = 0; i < themeColorList.length; i++) {
+                                        if(themeColorList[i].colorName == SPUtil.getThemeColor()) {
+                                          setState(() {
+                                            primary = themeColorList[i].color;
+                                            scaffoldBackgroundColor = black;
+                                            themeTextDefaultColor = white;
+                                            bottomBarColor = blackGrey;
+                                            bottomBarItemAndDayNameColor = white;
+                                            cardAndDialogBackgroundColor = blackGrey;
+                                            textFormFieldFillColor = blackGrey;
+                                            widget.profileData.onThemeChange!.call();
+                                          });
+                                        }
+                                      }
+                                    }
+                                    else {
+                                      for(var i = 0; i < themeColorList.length; i++) {
+                                        if(themeColorList[i].colorName == SPUtil.getThemeColor()) {
+                                          setState(() {
+                                            primary = themeColorList[i].color;
+                                            scaffoldBackgroundColor = white;
+                                            themeTextDefaultColor = blackTitle;
+                                            bottomBarColor = white;
+                                            bottomBarItemAndDayNameColor = subtitleGrey;
+                                            cardAndDialogBackgroundColor = white;
+                                            textFormFieldFillColor = fillGray;
+                                            widget.profileData.onThemeChange!.call();
+                                          });
+                                        }
+                                      }
+                                    }
+                                  });
+
+                                },
+                              );
+                            },
+                            separatorBuilder:(BuildContext context, int index){
+                              return const SizedBox(height: 15,);
+                            },
+                          ),
+                        ),
+                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: CustomText(value: "$enterYour $nameTitle", maxLines: 1, textAlign: TextAlign.start,),
-                          ),
-                          SizedBox(height: 10,),
-                          CustomTextFormField(
-                            controller: userNameCTRL,
-                            hintText: "$enterYour $nameTitle",
-                            textAlign: TextAlign.start,
-                            inputFormatters: CustomTextInputFormat.acceptUserName,
-                            keyboardType: TextInputType.multiline,
-                            onTapOutside: (val) => Util.focusOut(context),
-                            fillColor: textFormFieldFillColor,
-                            validator: (input) {
-                              if (input!.isEmpty) {
-                                return "Please enter name.";
-                              }
-                              else if(input.trim().isEmpty) {
-                                return "Only White Space Not Allowed";
-                              }
-                              return null;
-                            },
-                          ),
                           SizedBox(height: 25,),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: CustomText(value: "$enterYour $emailTitle", maxLines: 1, textAlign: TextAlign.start,),
-                          ),
+                          CustomText(value: "$themeTitle $colorTitle", maxLines: 1, textAlign: TextAlign.start,),
                           SizedBox(height: 10,),
-                          CustomTextFormField(
-                            controller: emailCTRL,
-                            hintText: "$enterYour $emailTitle",
-                            textAlign: TextAlign.start,
-                            inputFormatters: CustomTextInputFormat.acceptEmail,
-                            keyboardType: TextInputType.emailAddress,
-                            onTapOutside: (val) => Util.focusOut(context),
-                            fillColor: textFormFieldFillColor,
-                            validator: (input) {
-                              if (input!.isEmpty) {
-                                return "Please enter email address.";
-                              }
-                              else if (!Util.emailregExp
-                                  .hasMatch(input)) {
-                                return "Please enter valid email address.";
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: 25,),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: CustomText(value: "$enterYour $phoneTitle", maxLines: 1, textAlign: TextAlign.start,),
-                          ),
-                          SizedBox(height: 10,),
-                          CustomTextFormField(
-                            controller: phoneNumberCTRL,
-                            hintText: "$enterYour $phoneTitle $numberTitle",
-                            textAlign: TextAlign.start,
-                            inputFormatters: CustomTextInputFormat.acceptPhoneNumber,
-                            keyboardType: TextInputType.number,
-                            onTapOutside: (val) => Util.focusOut(context),
-                            fillColor: textFormFieldFillColor,
-                            validator: (input) {
-                              if (input!.isEmpty) {
-                                return "Please enter phone number.";
-                              }
-                              else if(input.length < 10) {
-                                return "Please enter valid phone number.";
-                              }
-                              return null;
-                            },
+                          Wrap(
+                            spacing: 10,
+                            runSpacing: 10,
+                            children: [
+                              for(var i=0 ; i < themeColorList.length ; i++)
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      SPUtil.setThemeColor(themeColorList[i].colorName);
+                                      primary = themeColorList[i].color;
+                                      widget.profileData.onThemeChange!.call();
+                                    });
+                                  },
+                                  child: CustomColorButton(
+                                    SPUtil.getThemeColor() == themeColorList[i].colorName ? true : false,
+                                    themeColorList[i].color,
+                                  ),
+                                ),
+                            ],
                           ),
                         ],
                       ),
-                      SizedBox(height: 20,),
-                      if(isEdit == true)
-                        isLoading == true ? CircularProgressIndicator(color: primary,) : Row(
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  saveData();
-                                },
-                                child: CustomButton(
-                                  primary,
-                                  submitTitle,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 10,),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isEdit = false;
-                                  });
-                                },
-                                child: CustomButton(
-                                  primary,
-                                  cancelTitle,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                     ],
                   ),
                 ),
-              )
-                  : Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 40,),
-                  Center(
-                    child: Container(
-                      height: Util.screenWidth! * 0.35,
-                      width: Util.screenWidth! * 0.35,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 20,
-                          ),
-                        ],
-                      ),
-                      child: SvgPicture.asset(
-                        appIcon,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 25,),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomText(
-                          value: nameTitle,
-                          maxLines: 1,
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isEdit = true;
-                          });
-                        },
-                        child: Icon(
-                          Icons.mode_edit_outline_rounded,
-                          size: 25,
-                          color: themeTextDefaultColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  CustomText(value: SPUtil.getUserName(), maxLines: 2, color: hintGrey, fontWeight: 900, textAlign: TextAlign.start,),
-                  SizedBox(height: 25,),
-                  CustomText(value: emailTitle, maxLines: 1, textAlign: TextAlign.start,),
-                  SizedBox(height: 10,),
-                  CustomText(value: SPUtil.getUserEmail(), maxLines: 2, color: hintGrey, fontWeight: 900, textAlign: TextAlign.start,),
-                  SizedBox(height: 25,),
-                  CustomText(value: "$phoneTitle $numberTitle", maxLines: 1, textAlign: TextAlign.start,),
-                  SizedBox(height: 10,),
-                  CustomText(value: SPUtil.getUserPhoneNumber(), maxLines: 2, color: hintGrey, fontWeight: 900, textAlign: TextAlign.start,),
-                  SizedBox(height: 25,),
-                  Divider(
-                    height: 2,
-                    thickness: 2,
-                    color: greyBorder,
-                  ),
-                  SizedBox(height: 25,),
-                  CustomText(value: themeTitle, maxLines: 1, textAlign: TextAlign.start,),
-                  SizedBox(height: 10,),
-                  CustomDropDownField(
-                    selectedCategoryLabel: SPUtil.getTheme(),
-                    dropDownItemValue: MediaQuery.removePadding(
-                      removeTop: true,
-                      context: context,
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: themeList.length,
-                        itemBuilder: (context, index) {
-                          return DropDownItem(
-                            themeList[index],
-                                () {
-                              setState(() {
-                                SPUtil.setTheme(themeList[index]);
-                                if(SPUtil.getTheme() == darkTheme) {
-                                  for(var i = 0; i < themeColorList.length; i++) {
-                                    if(themeColorList[i].colorName == SPUtil.getThemeColor()) {
-                                      setState(() {
-                                        primary = themeColorList[i].color;
-                                        scaffoldBackgroundColor = black;
-                                        themeTextDefaultColor = white;
-                                        bottomBarColor = blackGrey;
-                                        bottomBarItemAndDayNameColor = white;
-                                        cardAndDialogBackgroundColor = blackGrey;
-                                        textFormFieldFillColor = blackGrey;
-                                        widget.profileData.onThemeChange!.call();
-                                      });
-                                    }
-                                  }
-                                }
-                                else {
-                                  for(var i = 0; i < themeColorList.length; i++) {
-                                    if(themeColorList[i].colorName == SPUtil.getThemeColor()) {
-                                      setState(() {
-                                        primary = themeColorList[i].color;
-                                        scaffoldBackgroundColor = white;
-                                        themeTextDefaultColor = blackTitle;
-                                        bottomBarColor = white;
-                                        bottomBarItemAndDayNameColor = subtitleGrey;
-                                        cardAndDialogBackgroundColor = white;
-                                        textFormFieldFillColor = fillGray;
-                                        widget.profileData.onThemeChange!.call();
-                                      });
-                                    }
-                                  }
-                                }
-                              });
-
-                            },
-                          );
-                        },
-                        separatorBuilder:(BuildContext context, int index){
-                          return const SizedBox(height: 15,);
-                        },
-                      ),
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 25,),
-                      CustomText(value: "$themeTitle $colorTitle", maxLines: 1, textAlign: TextAlign.start,),
-                      SizedBox(height: 10,),
-                      Wrap(
-                        spacing: 10,
-                        runSpacing: 10,
-                        children: [
-                          for(var i=0 ; i < themeColorList.length ; i++)
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  SPUtil.setThemeColor(themeColorList[i].colorName);
-                                  primary = themeColorList[i].color;
-                                  widget.profileData.onThemeChange!.call();
-                                });
-                              },
-                              child: CustomColorButton(
-                                SPUtil.getThemeColor() == themeColorList[i].colorName ? true : false,
-                                themeColorList[i].color,
-                              ),
-                            ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
               ),
-            ),
+              SizedBox(height: Util.bottomBarHeight! - 10,),
+            ],
           ),
-          SizedBox(height: Util.bottomBarHeight! - 10,),
+          Positioned(
+              top: Util.statusBarHeight!,
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    CustomeLauncher.shareApp(context);
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: primary,
+                      borderRadius: BorderRadius.circular(50)),
+                  child: Icon(
+                    Icons.share_rounded,
+                    color: white,
+                    size: 25,
+                  ),
+                ),
+              )
+          ),
         ],
       ),
     );

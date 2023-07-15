@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:todoalerts/DatabaseHelper/dbHelper.dart';
+import 'package:todoalerts/Decoration/DecorationLibrary.dart';
 import 'package:todoalerts/Model/ModelLibrary.dart';
 import 'package:todoalerts/Routes/Routes.dart';
 import 'package:todoalerts/Utility/UtilityLibrary.dart';
@@ -151,6 +152,8 @@ class _ToDoAlertsState extends State<ToDoAlerts> implements UpdateTokenDataContr
 
   final navigatorKey = GlobalKey<NavigatorState>();
 
+  bool isRateUsShow = false;
+
   UpdateTokenParent? _updateTokenParent;
 
   _ToDoAlertsState(){
@@ -235,46 +238,6 @@ class _ToDoAlertsState extends State<ToDoAlerts> implements UpdateTokenDataContr
     }
   }
 
-  void _showForegroundNotification( {String title = '', String body = ''}) async {
-    const androidDetails = AndroidNotificationDetails(
-        'general_notification',
-        'General Notification'
-    );
-
-    const notificationDetails = NotificationDetails(android: androidDetails);
-
-    flutterLocalNotificationsPlugin.show(0, title, body, notificationDetails);
-  }
-
-  // Future<void> storeNotificationRecord(RemoteMessage message) async {
-  //   Map<String, dynamic> objectData = {};
-  //   if (message.notification != null) {
-  //     objectData = {
-  //       DatabaseHelper.notificationColumnTimeStamp:
-  //       DateFormat("MM/dd/yyyy HH:mm:ss").format(DateTime.now()),
-  //       DatabaseHelper.notificationColumnBody: message.notification!.body,
-  //       DatabaseHelper.notificationColumnTitle: message.notification!.title,
-  //       DatabaseHelper.notificationColumnStatus: 1
-  //     };
-  //     await DatabaseHelper.instance
-  //         .insertRecord(dbNotificationTable, objectData);
-  //   } else if (message.data != null) {
-  //     objectData = {
-  //       DatabaseHelper.notificationColumnTimeStamp:
-  //       DateFormat("MM/dd/yyyy HH:mm:ss").format(DateTime.now()),
-  //       DatabaseHelper.notificationColumnBody: message.notification!.body,
-  //       DatabaseHelper.notificationColumnTitle: message.notification!.title,
-  //       DatabaseHelper.notificationColumnStatus: 1
-  //     };
-  //     await DatabaseHelper.instance
-  //         .insertRecord(dbNotificationTable, objectData);
-  //   }
-  //   await SPUtil.getInstance();
-  //   int count = SPUtil.getBadgeCount() ?? 0;
-  //   FlutterAppBadger.updateBadgeCount(count + 1);
-  //   await SPUtil.setBadgeCount(count + 1);
-  // }
-
   Future<void> initSP() async {
     await SPUtil.getInstance();
     // rateUs();
@@ -314,20 +277,20 @@ class _ToDoAlertsState extends State<ToDoAlerts> implements UpdateTokenDataContr
     }
   }
 
-  // void rateUs() async {
-  //   Future.delayed(const Duration(minutes: 5), () {
-  //     if(SPUtil.getRateApply() == false && SPUtil.getRateUsShowingDate().isEmpty) {
-  //       setState(() {
-  //         isRateUsShow = true;
-  //       });
-  //     }
-  //     else if(SPUtil.getRateApply() == false && (SPUtil.getRateUsShowingDate().isNotEmpty && (DateFormat("dd-MM-yyyy").parse(DateFormat('dd-MM-yyyy').format(DateTime.now())).isAfter(DateFormat("dd-MM-yyyy").parse(SPUtil.getRateUsShowingDate())) == true))) {
-  //       setState(() {
-  //         isRateUsShow = true;
-  //       });
-  //     }
-  //   });
-  // }
+  void rateUs() async {
+    Future.delayed(const Duration(minutes: 5), () {
+      if(SPUtil.getRateApply() == false && SPUtil.getRateUsShowingDate().isEmpty) {
+        setState(() {
+          isRateUsShow = true;
+        });
+      }
+      else if(SPUtil.getRateApply() == false && (SPUtil.getRateUsShowingDate().isNotEmpty && (DateFormat("dd-MM-yyyy").parse(DateFormat('dd-MM-yyyy').format(DateTime.now())).isAfter(DateFormat("dd-MM-yyyy").parse(SPUtil.getRateUsShowingDate())) == true))) {
+        setState(() {
+          isRateUsShow = true;
+        });
+      }
+    });
+  }
 
   Future<void> getDeviceId() async{
     final DeviceInfoPlugin deviceInfoPlugin = await DeviceInfoPlugin();
@@ -375,6 +338,30 @@ class _ToDoAlertsState extends State<ToDoAlerts> implements UpdateTokenDataContr
             child: Stack(
               children: [
                 child!,
+                if(isRateUsShow == true)
+                  RateUsDialog(
+                        (){
+                      setState(() {
+                        isRateUsShow = false;
+                      });
+                    },
+                        (){
+                      setState(() {
+                        SPUtil.setRateUsShowingDate(DateFormat('dd-MM-yyyy').format(DateTime.now()));
+                        isRateUsShow = false;
+                      });
+                    },
+                        (){
+                      setState(() {
+                        SPUtil.showRating().then((value) {
+                          setState(() {
+                            SPUtil.setRateApply(true);
+                          });
+                        });
+                        isRateUsShow = false;
+                      });
+                    },
+                  ),
               ],
             ),
           ),
