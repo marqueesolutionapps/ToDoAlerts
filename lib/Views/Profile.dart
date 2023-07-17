@@ -165,7 +165,7 @@ class _ProfileState extends State<Profile> implements AddEditUserDataController 
                           ),
                           SizedBox(height: 20,),
                           if(isEdit == true)
-                            isLoading == true ? CircularProgressIndicator(color: primary,) : Row(
+                            isLoading == true ? Center(child: CircularProgressIndicator(color: primary,)) : Row(
                               children: [
                                 Expanded(
                                   child: GestureDetector(
