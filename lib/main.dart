@@ -28,35 +28,8 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 );
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-
   await storeNotificationRecord(message);
 
-  // Map<String, dynamic> objectData = {};
-  // if (message.notification != null) {
-  //   objectData = {
-  //     DatabaseHelper.notificationColumnTimeStamp:
-  //     DateFormat("MM/dd/yyyy HH:mm:ss").format(DateTime.now()),
-  //     DatabaseHelper.notificationColumnBody: message.notification!.body,
-  //     DatabaseHelper.notificationColumnTitle: message.notification!.title,
-  //     DatabaseHelper.notificationColumnStatus: 1
-  //   };
-  //   await DatabaseHelper.instance
-  //       .insertRecord(dbNotificationTable, objectData);
-  // } else if (message.data != null) {
-  //   objectData = {
-  //     DatabaseHelper.notificationColumnTimeStamp:
-  //     DateFormat("MM/dd/yyyy HH:mm:ss").format(DateTime.now()),
-  //     DatabaseHelper.notificationColumnBody: message.notification!.body,
-  //     DatabaseHelper.notificationColumnTitle: message.notification!.title,
-  //     DatabaseHelper.notificationColumnStatus: 1
-  //   };
-  //   await DatabaseHelper.instance
-  //       .insertRecord(dbNotificationTable, objectData);
-  // }
-  //
-  // int count = SPUtil.getBadgeCount() ?? 0;
-  // FlutterAppBadger.updateBadgeCount(count + 1);
-  // await SPUtil.setBadgeCount(count + 1);
 }
 
 Future<void> appTrackingPermission() async {
